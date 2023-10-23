@@ -1,37 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { updateCart } from "../utils/cartUtils";
 
 const initialState = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : { cartItems: [] };
-
-const addDecimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2);
-};
 
 const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
         addToCart: (state, action) => {
+            // The item to add to the cart
             const item = action.payload;
+            // Check if the item is already in the cart
             const existItem = state.cartItems.find((x) => x._id === item._id);
             if (existItem) {
+                // If exists, update quantity
                 state.cartItems = state.cartItems.map((x) => (x._id === existItem._id ? item : x));
             } else {
+                // If not exists, add new item to cartItems
                 state.cartItems = [...state.cartItems, item];
             }
-            // calculate items price
-            state.itemsPrice = addDecimals(state.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0));
-            // calculate shipping price(if order > $100 then free, else $10 shipping )
-            state.shippingPrice = addDecimals(state.itemsPrice > 100 ? 0 : 10);
-            // calculate tax price (15% tax)
-            state.taxPrice = addDecimals(Number(0.15 * state.itemsPrice).toFixed(2));
-            // calculate total price
-            state.totalPrice = (
-                Number(state.itemsPrice) +
-                Number(state.shippingPrice) +
-                Number(state.taxPrice)
-            ).toFixed(2);
-
-            localStorage.setItem("cart", JSON.stringify(state));
+            // Update the cart state using the updateCart function
+            return updateCart(state);
         },
     },
 });
