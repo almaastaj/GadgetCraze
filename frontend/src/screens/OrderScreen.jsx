@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPaypalClientIdQuery } from "../slices/orderApiSlice";
+import { useGetOrderDetailsQuery, usePayOrderMutation, useGetPaypalClientIdQuery } from "../slices/ordersApiSlice";
 
 const OrderScreen = () => {
     // id is renamed to orderId
@@ -48,7 +48,7 @@ const OrderScreen = () => {
             try {
                 await payOrder({ orderId, details });
                 refetch();
-                toast.success("Order is paid");
+                toast.success("Payment Successful!");
             } catch (err) {
                 toast.error(err?.data?.message || err.error);
             }
@@ -59,7 +59,7 @@ const OrderScreen = () => {
         await payOrder({ orderId, details: { payer: {} } });
         refetch();
 
-        toast.success("Order is paid");
+        toast.success("Payment Successful!");
     }
 
     function onError(err) {
