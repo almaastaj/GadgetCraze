@@ -9,6 +9,7 @@ import { addToCart } from "../slices/cartSlice";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Rating from "../components/Rating";
+import Meta from "../components/Meta";
 import { toast } from "react-toastify";
 
 const ProductScreen = () => {
@@ -60,6 +61,7 @@ const ProductScreen = () => {
                 <Message variant="danger">{error?.data?.message || error.error}</Message>
             ) : (
                 <>
+                    <Meta title={product.name} description={product.description} />
                     <Row>
                         <Col md={5}>
                             <Image src={product.image} alt={product.name} fluid></Image>
