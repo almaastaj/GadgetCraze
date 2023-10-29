@@ -206,15 +206,18 @@ const OrderScreen = () => {
                                     ) : (
                                         <div>
                                             <Button style={{ marginBottom: "10px" }} onClick={onApproveTest}>
-                                                Test Pay Order
+                                                Pay Order
                                             </Button>
 
                                             <div>
-                                                <PayPalButtons
-                                                    createOrder={createOrder}
-                                                    onApprove={onApprove}
-                                                    onError={onError}
-                                                ></PayPalButtons>
+                                                {"" && (
+                                                    <PayPalButtons
+                                                        createOrder={createOrder}
+                                                        onApprove={onApprove}
+                                                        onError={onError}
+                                                        disabled
+                                                    ></PayPalButtons>
+                                                )}
                                             </div>
                                         </div>
                                     )}
