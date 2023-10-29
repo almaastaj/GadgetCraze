@@ -1,5 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+# Bug Fixes
+01-small*
+02-paypal*
 # dependencies
 node_modules
 KeyLearnings.md
