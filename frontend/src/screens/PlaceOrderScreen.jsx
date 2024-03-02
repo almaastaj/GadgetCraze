@@ -54,8 +54,10 @@ const PlaceOrderScreen = () => {
                             <h2>Shipping</h2>
                             <p>
                                 <strong>Address:</strong>
-                                {cart.shippingAddress.address}, {cart.shippingAddress.city}{" "}
-                                {cart.shippingAddress.postalCode}, {cart.shippingAddress.country}
+                                {cart.shippingAddress.address},{" "}
+                                {cart.shippingAddress.city}{" "}
+                                {cart.shippingAddress.postalCode},{" "}
+                                {cart.shippingAddress.country}
                             </p>
                         </ListGroup.Item>
 
@@ -75,13 +77,26 @@ const PlaceOrderScreen = () => {
                                         <ListGroup.Item key={index}>
                                             <Row>
                                                 <Col md={1}>
-                                                    <Image src={item.image} alt={item.name} fluid rounded />
+                                                    <Image
+                                                        src={item.image}
+                                                        alt={item.name}
+                                                        fluid
+                                                        rounded
+                                                    />
                                                 </Col>
                                                 <Col>
-                                                    <Link to={`/product/${item._id}`}>{item.name}</Link>
+                                                    <Link
+                                                        to={`/product/${item._id}`}
+                                                    >
+                                                        {item.name}
+                                                    </Link>
                                                 </Col>
                                                 <Col md={4}>
-                                                    {item.qty} x ${item.price} = ${(item.qty * item.price).toFixed(2)}
+                                                    {item.qty} x ₹{item.price} =
+                                                    ₹
+                                                    {(
+                                                        item.qty * item.price
+                                                    ).toFixed(2)}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -100,29 +115,33 @@ const PlaceOrderScreen = () => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${cart.itemsPrice}</Col>
+                                    <Col>₹{cart.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${cart.shippingPrice}</Col>
+                                    <Col>₹{cart.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>${cart.taxPrice}</Col>
+                                    <Col>₹{cart.taxPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>${cart.totalPrice}</Col>
+                                    <Col>₹{cart.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
-                                {error && <Message variant="danger">{error.data.message}</Message>}
+                                {error && (
+                                    <Message variant="danger">
+                                        {error.data.message}
+                                    </Message>
+                                )}
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Button

@@ -11,10 +11,13 @@ export const updateCart = (state) => {
     // Calculate the items price in whole number (pennies) to avoid issues with
     // floating point number calculations
     // calculate items price
-    const itemsPrice = state.cartItems.reduce((acc, item) => acc + (item.price * 100 * item.qty) / 100, 0);
+    const itemsPrice = state.cartItems.reduce(
+        (acc, item) => acc + (item.price * 100 * item.qty) / 100,
+        0,
+    );
     state.itemsPrice = addDecimals(itemsPrice);
-    // calculate shipping price(if order > $100 then free, else $10 shipping )
-    const shippingPrice = itemsPrice > 100 ? 0 : 10;
+    // calculate shipping price(if order > ₹3000 then free, else ₹100 shipping )
+    const shippingPrice = itemsPrice > 3000 ? 0 : 100;
     state.shippingPrice = addDecimals(shippingPrice);
     // Calculate the tax price | Tax is 15% of the items price
     const taxPrice = 0.15 * itemsPrice;

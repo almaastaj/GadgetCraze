@@ -18,17 +18,27 @@ const OrderScreen = () => {
     // id is renamed to orderId
     const { id: orderId } = useParams();
     // data is renamed to order, refetch to get fresh data and avoid stale data
-    const { data: order, refetch, isLoading, error } = useGetOrderDetailsQuery(orderId);
+    const {
+        data: order,
+        refetch,
+        isLoading,
+        error,
+    } = useGetOrderDetailsQuery(orderId);
 
     const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
     // deliver status of order
-    const [deliverOrder, { isLoading: loadingDeliver }] = useDeliverOrderMutation();
+    const [deliverOrder, { isLoading: loadingDeliver }] =
+        useDeliverOrderMutation();
     // User data
     const { userInfo } = useSelector((state) => state.auth);
 
     const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
     // Paypal data (isLoading is renamed because we are laready using isLoading variable)
-    const { data: paypal, isLoading: loadingPayPal, error: errorPayPal } = useGetPaypalClientIdQuery();
+    const {
+        data: paypal,
+        isLoading: loadingPayPal,
+        error: errorPayPal,
+    } = useGetPaypalClientIdQuery();
 
     useEffect(() => {
         if (!errorPayPal && !loadingPayPal && paypal.clientId) {
@@ -100,7 +110,9 @@ const OrderScreen = () => {
     return isLoading ? (
         <Loader />
     ) : error ? (
-        <Message variant="danger">{error?.data?.message || error.error}</Message>
+        <Message variant="danger">
+            {error?.data?.message || error.error}
+        </Message>
     ) : (
         <>
             <h1>Order {order._id}</h1>
@@ -113,17 +125,26 @@ const OrderScreen = () => {
                                 <strong>Name: </strong> {order.user.name}
                             </p>
                             <p>
-                                <strong>Email: </strong> <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
+                                <strong>Email: </strong>{" "}
+                                <a href={`mailto:${order.user.email}`}>
+                                    {order.user.email}
+                                </a>
                             </p>
                             <p>
                                 <strong>Address:</strong>
-                                {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
-                                {order.shippingAddress.postalCode}, {order.shippingAddress.country}
+                                {order.shippingAddress.address},{" "}
+                                {order.shippingAddress.city}{" "}
+                                {order.shippingAddress.postalCode},{" "}
+                                {order.shippingAddress.country}
                             </p>
                             {order.isDelivered ? (
-                                <Message variant="success">Delivered on {order.deliveredAt}</Message>
+                                <Message variant="success">
+                                    Delivered on {order.deliveredAt}
+                                </Message>
                             ) : (
-                                <Message variant="danger">Not Delivered</Message>
+                                <Message variant="danger">
+                                    Not Delivered
+                                </Message>
                             )}
                         </ListGroup.Item>
 
@@ -134,7 +155,9 @@ const OrderScreen = () => {
                                 {order.paymentMethod}
                             </p>
                             {order.isPaid ? (
-                                <Message variant="success">Paid on {order.paidAt}</Message>
+                                <Message variant="success">
+                                    Paid on {order.paidAt}
+                                </Message>
                             ) : (
                                 <Message variant="danger">Not Paid</Message>
                             )}
@@ -150,13 +173,26 @@ const OrderScreen = () => {
                                         <ListGroup.Item key={index}>
                                             <Row>
                                                 <Col md={1}>
-                                                    <Image src={item.image} alt={item.name} fluid rounded />
+                                                    <Image
+                                                        src={item.image}
+                                                        alt={item.name}
+                                                        fluid
+                                                        rounded
+                                                    />
                                                 </Col>
                                                 <Col>
-                                                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                                                    <Link
+                                                        to={`/product/${item.product}`}
+                                                    >
+                                                        {item.name}
+                                                    </Link>
                                                 </Col>
                                                 <Col md={4}>
-                                                    {item.qty} x ${item.price} = ${(item.qty * item.price).toFixed(2)}
+                                                    {item.qty} x ₹{item.price} =
+                                                    ₹
+                                                    {(
+                                                        item.qty * item.price
+                                                    ).toFixed(2)}
                                                 </Col>
                                             </Row>
                                         </ListGroup.Item>
@@ -175,25 +211,25 @@ const OrderScreen = () => {
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Items</Col>
-                                    <Col>${order.itemsPrice}</Col>
+                                    <Col>₹{order.itemsPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Shipping</Col>
-                                    <Col>${order.shippingPrice}</Col>
+                                    <Col>₹{order.shippingPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Tax</Col>
-                                    <Col>${order.taxPrice}</Col>
+                                    <Col>₹{order.taxPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             <ListGroup.Item>
                                 <Row>
                                     <Col>Total</Col>
-                                    <Col>${order.totalPrice}</Col>
+                                    <Col>₹{order.totalPrice}</Col>
                                 </Row>
                             </ListGroup.Item>
                             {/* PAY ORDER */}
@@ -205,14 +241,19 @@ const OrderScreen = () => {
                                         <Loader />
                                     ) : (
                                         <div>
-                                            <Button style={{ marginBottom: "10px" }} onClick={onApproveTest}>
+                                            <Button
+                                                style={{ marginBottom: "10px" }}
+                                                onClick={onApproveTest}
+                                            >
                                                 Pay Order
                                             </Button>
 
                                             <div>
                                                 {"" && (
                                                     <PayPalButtons
-                                                        createOrder={createOrder}
+                                                        createOrder={
+                                                            createOrder
+                                                        }
                                                         onApprove={onApprove}
                                                         onError={onError}
                                                         disabled
@@ -226,13 +267,20 @@ const OrderScreen = () => {
                             {/* {MARK AS DELIVERED PLACEHOLDER} */}
                             {loadingDeliver && <Loader />}
 
-                            {userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered && (
-                                <ListGroup.Item>
-                                    <Button type="button" className="btn btn-block" onClick={deliverHandler}>
-                                        Mark As Delivered
-                                    </Button>
-                                </ListGroup.Item>
-                            )}
+                            {userInfo &&
+                                userInfo.isAdmin &&
+                                order.isPaid &&
+                                !order.isDelivered && (
+                                    <ListGroup.Item>
+                                        <Button
+                                            type="button"
+                                            className="btn btn-block"
+                                            onClick={deliverHandler}
+                                        >
+                                            Mark As Delivered
+                                        </Button>
+                                    </ListGroup.Item>
+                                )}
                         </ListGroup>
                     </Card>
                 </Col>
