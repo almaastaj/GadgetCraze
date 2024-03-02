@@ -10,8 +10,8 @@ import { setCredentials } from "../slices/authSlice";
 import { toast } from "react-toastify";
 
 const LoginScreen = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [email, setEmail] = useState("test@email.com");
+    const [password, setPassword] = useState("123456");
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -65,7 +65,12 @@ const LoginScreen = () => {
                     ></Form.Control>
                 </Form.Group>
 
-                <Button type="submit" variant="primary" className="mt-2" disabled={isLoading}>
+                <Button
+                    type="submit"
+                    variant="primary"
+                    className="mt-2"
+                    disabled={isLoading}
+                >
                     Sign In
                 </Button>
                 {isLoading && <Loader />}
@@ -73,7 +78,16 @@ const LoginScreen = () => {
 
             <Row className="py-3">
                 <Col>
-                    New Customer? <Link to={redirect ? `/register?redirect=${redirect}` : "/register"}>Register</Link>
+                    New Customer?{" "}
+                    <Link
+                        to={
+                            redirect
+                                ? `/register?redirect=${redirect}`
+                                : "/register"
+                        }
+                    >
+                        Register
+                    </Link>
                 </Col>
             </Row>
         </FormContainer>
