@@ -2,6 +2,9 @@
 
 This Repo contains **source code** for an E-commerce Website named [GadgetCraze](https://gadgetcraze-v1.onrender.com/) which was created using **MERN Stack**.
 
+# Demo Video
+https://github.com/user-attachments/assets/c23da8ec-f288-4da1-a852-0be4a9a59a1d
+
 # HomePage
 
 ![Home Page of Gadget Craze](./GadgetCrazeImages/GadgetCrazeHomePage.jpeg)
